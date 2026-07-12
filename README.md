@@ -23,11 +23,58 @@ The platform aims to:
 
 ---
 
+# Project Structure
+
+This repository is structured as a monorepo containing both the backend service and the frontend web application:
+
+```
+AssetFlow/
+├── backend/      # Express API server with MongoDB/Mongoose
+└── frontend/     # React frontend with Vite & TailwindCSS
+```
+
+---
+
 # Setup & Integration Instructions
 
-This repository currently contains the **Frontend** application for AssetFlow, built with React, Vite, TailwindCSS v4, and modern design practices.
+## Running the Backend Locally
+
+The backend is built with Node.js, Express, and MongoDB.
+
+### Prerequisites
+- Node.js (v18 or higher recommended)
+- MongoDB running locally or a MongoDB Atlas connection string
+- npm or yarn
+
+### Steps to Run
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables. Copy `.env.example` to `.env` and fill in the values:
+   ```bash
+   cp .env.example .env
+   ```
+   Provide your MongoDB URI and desired Port:
+   ```env
+   PORT=5000
+   MONGODB_URI=mongodb://localhost:27017/assetflow
+   JWT_SECRET=your_jwt_secret
+   ```
+4. Start the development server (runs with nodemon):
+   ```bash
+   npm run dev
+   ```
+
+---
 
 ## Running the Frontend Locally
+
+The frontend is built with React, Vite, TailwindCSS v4, and modern design practices.
 
 ### Prerequisites
 - Node.js (v18 or higher recommended)
@@ -42,31 +89,32 @@ This repository currently contains the **Frontend** application for AssetFlow, b
    ```bash
    npm install
    ```
-3. Start the development server:
+3. Set up environment variables by creating a `.env` file in the `frontend/` directory (see [Integrating with the Backend](#integrating-with-the-backend) below).
+4. Start the development server:
    ```bash
    npm run dev
    ```
-4. Open your browser and navigate to the URL provided in the terminal (usually `http://localhost:5173`).
+5. Open your browser and navigate to the URL provided in the terminal (usually `http://localhost:5173`).
 
 ---
 
 ## Integrating with the Backend
 
-The frontend is designed to be completely decoupled from the backend. Currently, it uses mock data to demonstrate the UI (e.g., in `Dashboard.jsx`). To integrate with the backend team's API:
+Currently, the frontend uses mock data to demonstrate the UI (e.g., in `Dashboard.jsx`). To integrate with the backend API:
 
 ### 1. Environment Variables
 Create a `.env` file in the `frontend/` directory and define the backend API base URL:
 ```env
-VITE_API_BASE_URL=http://localhost:5000/api
+VITE_API_BASE_URL=http://localhost:5000
 ```
 
 ### 2. API Service Configuration
-In `frontend/src/services/api.js` (to be created by the integration team), configure Axios to use this base URL:
+In `frontend/src/services/api.js`, configure Axios to use this base URL:
 ```javascript
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -85,7 +133,7 @@ export default api;
 ```
 
 ### 3. Replacing Mock Data
-Replace the static `MOCK_ASSETS` arrays with TanStack Query hooks fetching from the API:
+Replace static data arrays with TanStack Query hooks fetching from the API:
 
 ```javascript
 import { useQuery } from '@tanstack/react-query';
@@ -95,7 +143,7 @@ export function useAssets() {
   return useQuery({
     queryKey: ['assets'],
     queryFn: async () => {
-      const response = await api.get('/assets');
+      const response = await api.get('/api/assets');
       return response.data;
     }
   });
@@ -107,17 +155,29 @@ Then use `const { data: assets, isLoading } = useAssets();` in your components.
 
 ## Tech Stack
 
-### frontend: 
-| Technology       | Purpose                 |
-| ---------------- | ----------------------- |
-| React.js (Vite)  | Frontend Framework      |
-| Tailwind CSS v4  | UI Styling              |
-| React Router DOM | Routing                 |
-| React Hook Form  | Form Handling           |
-| Zod              | Form Validation         |
-| Axios            | API Requests            |
-| TanStack Query   | Server State Management |
-| Framer Motion    | Animations              |
-| Recharts         | Dashboard Analytics     |
-| React Hot Toast  | Notifications           |
-| React Icons/Lucide| Icons                   |
+### Backend
+| Technology        | Purpose                    |
+| ----------------- | -------------------------- |
+| Node.js & Express | API Framework              |
+| MongoDB & Mongoose| Database & ODM             |
+| JSON Web Token    | Authentication & Security  |
+| bcryptjs          | Password Hashing           |
+| Express Validator | Request Validation         |
+| Helmet & CORS     | Security & Header Policies |
+| Morgan            | HTTP Request Logging       |
+| Nodemon           | Development Utility        |
+
+### Frontend
+| Technology        | Purpose                 |
+| ----------------- | ----------------------- |
+| React.js (Vite)   | Frontend Framework      |
+| Tailwind CSS v4   | UI Styling              |
+| React Router DOM  | Routing                 |
+| React Hook Form   | Form Handling           |
+| Zod               | Form Validation         |
+| Axios             | API Requests            |
+| TanStack Query    | Server State Management |
+| Framer Motion     | Animations              |
+| Recharts          | Dashboard Analytics     |
+| React Hot Toast   | Notifications           |
+| Lucide React      | Icons                   |

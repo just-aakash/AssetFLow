@@ -24,7 +24,7 @@ export default function Login() {
   const onSubmit = async (data) => {
     setIsLoading(true);
     setTimeout(() => {
-      login({ name: 'Alex Manager', email: data.email, role: 'Asset Manager' });
+      login({ name: data.email.split('@')[0], email: data.email, role: 'Asset Manager' });
       setIsLoading(false);
       toast.success('Welcome back!');
       navigate('/dashboard');

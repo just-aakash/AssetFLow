@@ -10,6 +10,15 @@ import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import Dashboard from './pages/Dashboard';
+import Organization from './pages/Organization';
+import Assets from './pages/Assets';
+import Allocation from './pages/Allocation';
+import Bookings from './pages/Bookings';
+import Maintenance from './pages/Maintenance';
+import Audit from './pages/Audit';
+import Reports from './pages/Reports';
+import Notifications from './pages/Notifications';
+import Settings from './pages/Settings';
 
 const queryClient = new QueryClient();
 
@@ -27,6 +36,15 @@ function App() {
             </Route>
             <Route element={<AppLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/organization" element={<Organization />} />
+              <Route path="/assets" element={<Assets />} />
+              <Route path="/allocation" element={<Allocation />} />
+              <Route path="/bookings" element={<Bookings />} />
+              <Route path="/maintenance" element={<Maintenance />} />
+              <Route path="/audit" element={<Audit />} />
+              <Route path="/reports" element={<Reports />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Route>
           </Routes>

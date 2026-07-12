@@ -1,102 +1,112 @@
 import React from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Package, Calendar, Wrench, FileText, Bell, Search, Settings, LogOut } from 'lucide-react';
+import {
+  LayoutDashboard, Building2, Package, ArrowLeftRight,
+  CalendarDays, Wrench, ClipboardCheck, BarChart2, Bell, LogOut
+} from 'lucide-react';
 import { cn } from '@/components/common/Button';
 import { useAppContext } from '@/context/AppContext';
 import toast from 'react-hot-toast';
 
-export default function AppLayout() {
-  const { user, logout } = useAppContext();
-  const navigate = useNavigate();
+const NAV_ITEMS = [
+  { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+  { label: 'Organization Setup', path: '/organization', icon: Building2 },
+  { label: 'Assets', path: '/assets', icon: Package },
+  { label: 'Allocation & Transfer', path: '/allocation', icon: ArrowLeftRight },
+  { label: 'Resource Booking', path: '/bookings', icon: CalendarDays },
+  { label: 'Maintenance', path: '/maintenance', icon: Wrench },
+  { label: 'Audit', path: '/audit', icon: ClipboardCheck },
+  { label: 'Reports', path: '/reports', icon: BarChart2 },
+  { label: 'Notifications', path: '/notifications', icon: Bell },
+];
 
-  const navItems = [
-    { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { label: 'Assets', path: '/assets', icon: Package },
-    { label: 'Bookings', path: '/bookings', icon: Calendar },
-    { label: 'Maintenance', path: '/maintenance', icon: Wrench },
-    { label: 'Reports', path: '/reports', icon: FileText },
-  ];
+export default function AppLayout() {
+  const { user, logout, unreadCount } = useAppContext();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    toast.success('Logged out successfully');
+    toast.success('Logged out');
     navigate('/');
   };
 
   return (
-    <div className="min-h-screen bg-background p-4 md:p-6 flex items-center justify-center">
-      <div className="w-full max-w-[1400px] h-[94vh] bg-[#10141a] rounded-[2.5rem] border border-border shadow-2xl flex flex-col overflow-hidden">
-
-        {/* Top Nav */}
-        <header className="h-18 px-8 py-4 flex items-center justify-between border-b border-border/50 shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-black font-bold text-lg shadow-[0_0_10px_rgba(161,246,94,0.4)]">
-              A
-            </div>
-            <span className="text-lg font-semibold tracking-wide">AssetFlow</span>
+    <div className="min-h-screen bg-background flex">
+      {/* ─── Left Sidebar ─── */}
+      <aside className="w-52 shrink-0 bg-[#10141a] border-r border-border flex flex-col">
+        {/* Logo */}
+        <div className="h-14 px-4 flex items-center gap-2 border-b border-border">
+          <div className="w-7 h-7 rounded bg-primary flex items-center justify-center text-black font-bold text-sm shadow-[0_0_10px_rgba(161,246,94,0.3)]">
+            A
           </div>
+          <span className="font-semibold text-sm tracking-wide">AssetFlow</span>
+        </div>
 
-          <nav className="hidden lg:flex items-center gap-1.5 bg-[#181d24] p-1.5 rounded-full border border-border/50">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  cn(
-                    'px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-2',
-                    isActive
-                      ? 'bg-primary text-black shadow-[0_0_12px_rgba(161,246,94,0.3)]'
-                      : 'text-muted hover:text-foreground hover:bg-white/5'
-                  )
-                }
-              >
-                <item.icon className="w-4 h-4" />
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
+        {/* Nav */}
+        <nav className="flex-1 py-3 px-2 space-y-0.5 overflow-y-auto">
+          {NAV_ITEMS.map(({ label, path, icon: Icon }) => (
+            <NavLink
+              key={path}
+              to={path}
+              className={({ isActive }) =>
+                cn(
+                  'flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 relative',
+                  isActive
+                    ? 'bg-primary/15 text-primary'
+                    : 'text-muted hover:text-foreground hover:bg-white/5'
+                )
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  {isActive && (
+                    <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-primary rounded-r" />
+                  )}
+                  <Icon className="w-3.5 h-3.5 shrink-0" />
+                  <span className="truncate">{label}</span>
+                  {path === '/notifications' && unreadCount > 0 && (
+                    <span className="ml-auto bg-primary text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                      {unreadCount}
+                    </span>
+                  )}
+                </>
+              )}
+            </NavLink>
+          ))}
+        </nav>
 
-          <div className="flex items-center gap-3">
-            <button className="w-9 h-9 rounded-full bg-card border border-border flex items-center justify-center text-muted hover:text-foreground transition-colors">
-              <Search className="w-4 h-4" />
-            </button>
-            <button className="w-9 h-9 rounded-full bg-card border border-border flex items-center justify-center text-muted hover:text-foreground transition-colors">
-              <Bell className="w-4 h-4" />
-            </button>
-            <button className="w-9 h-9 rounded-full bg-card border border-border flex items-center justify-center text-muted hover:text-foreground transition-colors">
-              <Settings className="w-4 h-4" />
-            </button>
-
-            {user && (
-              <div className="flex items-center gap-2 ml-1">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-primary to-green-300 p-0.5 cursor-pointer">
-                  <img
-                    src={`https://i.pravatar.cc/150?u=${user.email}`}
-                    alt={user.name}
-                    className="w-full h-full rounded-full border-2 border-[#10141a] object-cover"
-                  />
-                </div>
-                <div className="hidden md:block">
-                  <div className="text-xs font-medium leading-tight">{user.name}</div>
-                  <div className="text-[10px] text-muted">{user.role}</div>
-                </div>
-                <button
-                  onClick={handleLogout}
-                  className="w-9 h-9 rounded-full bg-card border border-border flex items-center justify-center text-muted hover:text-red-400 transition-colors ml-1"
-                  title="Logout"
-                >
-                  <LogOut className="w-4 h-4" />
-                </button>
+        {/* User + Logout */}
+        <div className="border-t border-border p-3">
+          {user && (
+            <div 
+              onClick={() => navigate('/settings')}
+              className="flex items-center gap-2 mb-2 p-1.5 -mx-1.5 rounded-lg hover:bg-white/5 cursor-pointer transition-colors"
+            >
+              <img
+                src={user.avatar || `https://i.pravatar.cc/150?u=${user.email}`}
+                alt={user.name}
+                className="w-7 h-7 rounded-full border border-border object-cover"
+              />
+              <div className="min-w-0 flex-1">
+                <div className="text-xs font-medium truncate group-hover:text-primary transition-colors">{user.name}</div>
+                <div className="text-[10px] text-muted truncate">{user.role}</div>
               </div>
-            )}
-          </div>
-        </header>
+            </div>
+          )}
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs text-muted hover:text-red-400 hover:bg-red-500/10 transition-all"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            Logout
+          </button>
+        </div>
+      </aside>
 
-        {/* Content */}
-        <main className="flex-1 overflow-auto p-8">
-          <Outlet />
-        </main>
-      </div>
+      {/* ─── Main Content ─── */}
+      <main className="flex-1 overflow-auto bg-background">
+        <Outlet />
+      </main>
     </div>
   );
 }
