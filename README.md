@@ -105,29 +105,9 @@ Then use `const { data: assets, isLoading } = useAssets();` in your components.
 
 ---
 
-# Architecture
-
-assetflow/
-│
-├── frontend/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   ├── layouts/
-│   │   ├── pages/
-│   │   ├── hooks/
-│   │   ├── services/
-│   │   ├── context/
-│   │   ├── utils/
-│   │   ├── routes/
-│   │   ├── schemas/
-│   │   └── App.jsx
-│
-└── backend/
-    ├── src/
-    └── server.js
-
 ## Tech Stack
+
+###frontend: 
 | Technology       | Purpose                 |
 | ---------------- | ----------------------- |
 | React.js (Vite)  | Frontend Framework      |
