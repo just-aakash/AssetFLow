@@ -107,7 +107,7 @@ Then use `const { data: assets, isLoading } = useAssets();` in your components.
 
 ## Tech Stack
 
-###frontend: 
+### frontend: 
 | Technology       | Purpose                 |
 | ---------------- | ----------------------- |
 | React.js (Vite)  | Frontend Framework      |
