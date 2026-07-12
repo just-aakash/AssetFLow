@@ -87,7 +87,10 @@ const INITIAL_NOTIFICATIONS = [
 
 // ─── Provider ────────────────────────────────────────────────
 export function AppProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('assetflow_user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [assets, setAssets] = useState(INITIAL_ASSETS);
   const [departments, setDepartments] = useState(INITIAL_DEPARTMENTS);
   const [categories, setCategories] = useState(INITIAL_CATEGORIES);
@@ -98,9 +101,23 @@ export function AppProvider({ children }) {
   const [audits, setAudits] = useState(INITIAL_AUDITS);
   const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
 
-  const login = (userData) => setUser(userData);
-  const logout = () => setUser(null);
-  const updateProfile = (updates) => setUser(prev => ({ ...prev, ...updates }));
+  const login = (userData) => {
+    setUser(userData);
+    localStorage.setItem('assetflow_user', JSON.stringify(userData));
+  };
+  
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('assetflow_user');
+  };
+  
+  const updateProfile = (updates) => {
+    setUser(prev => {
+      const newUser = { ...prev, ...updates };
+      localStorage.setItem('assetflow_user', JSON.stringify(newUser));
+      return newUser;
+    });
+  };
 
   // Asset actions
   const updateAssetStatus = (id, newStatus) =>

@@ -22,10 +22,14 @@ export default function Settings() {
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const url = URL.createObjectURL(file);
-      setProfile(prev => ({ ...prev, avatar: url }));
-      updateProfile({ avatar: url });
-      toast.success('Profile photo updated');
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        setProfile(prev => ({ ...prev, avatar: base64String }));
+        updateProfile({ avatar: base64String });
+        toast.success('Profile photo updated');
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -111,7 +115,10 @@ export default function Settings() {
         {/* Right Column: Other Options */}
         <div className="space-y-4">
           
-          <button className="w-full flex items-center justify-between p-4 bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl hover:bg-white/5 transition-all text-left">
+          <button 
+            onClick={() => toast('Security settings coming soon!', { icon: '🛡️' })}
+            className="w-full flex items-center justify-between p-4 bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl hover:bg-white/5 transition-all text-left"
+          >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
                 <Shield className="w-5 h-5 text-white/70" />
@@ -124,7 +131,10 @@ export default function Settings() {
             <ChevronRight className="w-4 h-4 text-white/30" />
           </button>
 
-          <button className="w-full flex items-center justify-between p-4 bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl hover:bg-white/5 transition-all text-left">
+          <button 
+            onClick={() => toast('Notification preferences coming soon!', { icon: '🔔' })}
+            className="w-full flex items-center justify-between p-4 bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl hover:bg-white/5 transition-all text-left"
+          >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
                 <Bell className="w-5 h-5 text-white/70" />
@@ -137,7 +147,10 @@ export default function Settings() {
             <ChevronRight className="w-4 h-4 text-white/30" />
           </button>
 
-          <button className="w-full flex items-center justify-between p-4 bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl hover:bg-white/5 transition-all text-left">
+          <button 
+            onClick={() => toast('Integrations coming soon!', { icon: '🔌' })}
+            className="w-full flex items-center justify-between p-4 bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl hover:bg-white/5 transition-all text-left"
+          >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
                 <Key className="w-5 h-5 text-white/70" />
