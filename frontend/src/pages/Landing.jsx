@@ -39,13 +39,6 @@ export default function Landing() {
             <span className="font-semibold text-white tracking-wide">ASSETFLOW</span>
           </div>
 
-          {/* Nav Links */}
-          <div className="hidden md:flex items-center gap-8 text-sm text-white/70">
-            {['Product', 'Solutions', 'Pricing', 'Resources', 'Company'].map(link => (
-              <a key={link} href="#" className="hover:text-white transition-colors">{link}</a>
-            ))}
-          </div>
-
           {/* CTA Buttons */}
           <div className="flex items-center gap-3">
             <button
@@ -72,35 +65,35 @@ export default function Landing() {
           transition={{ duration: 0.6 }}
         >
           {/* Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/20 bg-black/30 backdrop-blur-md text-sm text-white/80 mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/20 bg-black/30 backdrop-blur-sm text-sm text-white/80 mb-8">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            New &nbsp;<span className="text-white font-medium">AssetFlow 2.0 is now available</span>
+            New &nbsp;<span className="text-white font-medium">Now with Real-Time Asset Tracking</span>
             <ArrowRight className="w-3.5 h-3.5 text-white/50" />
           </div>
 
           {/* Headline */}
-          <h1 className="text-6xl md:text-7xl font-bold leading-tight mb-6 max-w-3xl mx-auto" style={{ fontFamily: "'Georgia', serif", letterSpacing: '-0.02em' }}>
-            Intelligence that{' '}
-            <em className="not-italic text-primary" style={{ fontFamily: "'Georgia', serif", fontStyle: 'italic' }}>grows</em>{' '}
-            with you.
+          <h1 className="text-6xl md:text-6xl font-bold leading-tight mb-6 max-w-3xl mx-auto" style={{ fontFamily: "'Georgia', serif", letterSpacing: '-0.02em' }}>
+            Manage Every Asset.{' '}
+            <em className="not-italic text-primary" style={{ fontFamily: "'Georgia', serif", fontStyle: 'italic' }}>Empower</em>{' '}
+            Every Team.
           </h1>
 
-          <p className="text-lg text-white/60 max-w-xl mx-auto mb-10">
-            The all-in-one platform for organizations who want clarity,<br />
-            speed, and complete asset visibility.
+          <p className="text-md text-white/60 max-w-xl mx-auto mb-10">
+            AssetFlow centralizes asset tracking, resource booking, maintenance workflows,<br />
+            audits, and analytics into one powerful enterprise platform.
           </p>
 
           <button
             onClick={() => navigate('/signup')}
             className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary text-black font-semibold text-lg hover:bg-primary-hover transition-all shadow-[0_0_30px_rgba(161,246,94,0.5)] mb-6"
           >
-            Start Free Trial <ArrowRight className="w-5 h-5" />
+            Explore Platform <ArrowRight className="w-5 h-5" />
           </button>
 
           <div className="flex items-center justify-center gap-6 text-sm text-white/50">
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-primary" /> No credit card</span>
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-primary" /> 14-day free trial</span>
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-primary" /> Cancel anytime</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-primary" /> Role-Based Access</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-primary" /> Real-Time Tracking</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-primary" /> Smart Analytics</span>
           </div>
         </motion.div>
       </section>
@@ -119,10 +112,10 @@ export default function Landing() {
               <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
                 <Database className="w-5 h-5 text-primary" />
               </div>
-              <span className="font-semibold text-white">Unify your assets</span>
+              <span className="font-semibold text-white">Centralize Every Asset</span>
             </div>
             <p className="text-sm text-white/50 mb-6">
-              Connect all departments and turn scattered equipment lists into a single source of truth.
+              Manage equipment, furniture, vehicles, and shared resources from one unified platform with complete lifecycle visibility.
             </p>
             {/* Data Source illustration */}
             <div className="mt-auto space-y-2.5">
@@ -151,10 +144,10 @@ export default function Landing() {
               <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
                 <BarChart2 className="w-5 h-5 text-primary" />
               </div>
-              <span className="font-semibold text-white">Surface what matters</span>
+              <span className="font-semibold text-white">Gain Operational Insights</span>
             </div>
             <p className="text-sm text-white/50 mb-6">
-              Real-time dashboards that cut through noise and highlight overdue, idle, and critical assets.
+              Monitor asset utilization, overdue returns, maintenance status, and resource availability through real-time dashboards.
             </p>
             {/* Sparkline chart */}
             <div className="mt-auto relative h-28 flex items-end">
@@ -185,10 +178,10 @@ export default function Landing() {
               <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
                 <ShieldCheck className="w-5 h-5 text-primary" />
               </div>
-              <span className="font-semibold text-white">Act with confidence</span>
+              <span className="font-semibold text-white">Automate Enterprise Workflows</span>
             </div>
             <p className="text-sm text-white/50 mb-6">
-              Built-in audit cycles and maintenance workflows so your team can act fast, without risk.
+              Streamline approvals, maintenance requests, transfers, audits, and notifications while reducing manual effort.
             </p>
             {/* Orbit illustration */}
             <div className="mt-auto flex items-center justify-center h-28">
@@ -219,7 +212,7 @@ export default function Landing() {
       <div className="relative z-10 pb-12 text-center">
         <p className="text-xs uppercase tracking-widest text-white/30 mb-6">Trusted by innovative teams</p>
         <div className="flex flex-wrap items-center justify-center gap-10 text-white/30 font-semibold text-lg">
-          {['▲ Acme', '✳ LUMEN', 'N Nova', '⊙ PULSE', '·: atelier'].map(b => (
+          {[].map(b => (
             <span key={b} className="hover:text-white/60 transition-colors cursor-default">{b}</span>
           ))}
         </div>
